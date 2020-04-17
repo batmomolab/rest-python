@@ -1,5 +1,3 @@
-from zeep import Client
-import requests
 from flask import Flask, render_template
 from flask_restful import Resource, Api, reqparse
 
