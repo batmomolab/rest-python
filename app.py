@@ -23,14 +23,14 @@ class CalculPrix(Resource):
         if args['devise'] == 'Euro':
             prix = float(args['distance']) * prixkm
             return {'prix': prix,
-                    'devise': '€'}
+                    'devise': 'Euro'}
         elif args['devise'] == 'Dollar':
             prix = float(args['distance']) * prixkm * 1.09
             return {'prix': prix,
-                    'devise': '$'}
+                    'devise': 'Dollar'}
         elif args['devise'] == 'Yen':
             prix = float(args['distance']) * prixkm * 116.702
             return {'prix': prix,
-                    'devise': '¥'}
+                    'devise': 'Yen'}
 
 api.add_resource(CalculPrix, '/CalculPrix')
