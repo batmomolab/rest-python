@@ -16,18 +16,20 @@ prixkm = 0.25
 def home():
     return render_template('home.html')
 
+
 class CalculPrix(Resource):
     def get(self):
         # TODO devise
         args = parser.parse_args()
         if args['devise'] == 'Euro':
             prix = float(args['distance']) * prixkm
-            return prix + "€"
+            return prix
         elif args['devise'] == 'Dollar':
             prix = float(args['distance']) * prixkm * 1.09
-            return "$" + prix
+            return prix
         elif args['devise'] == 'Yen':
             prix = float(args['distance']) * prixkm * 116.702
-            return "¥" + prix
+            return prix
+
 
 api.add_resource(CalculPrix, '/CalculPrix')
