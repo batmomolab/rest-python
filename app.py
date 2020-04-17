@@ -18,7 +18,6 @@ prixkm = 0.25
 def home():
     return render_template('home.html')
 
-
 class CalculPrix(Resource):
     def get(self):
         # TODO devise
@@ -36,5 +35,6 @@ class CalculPrix(Resource):
             return {'prix': prix,
                     'devise': '¥'}
 
-
 api.add_resource(CalculPrix, '/calculPrix')
+if __name__ == '__main__':
+    app.run(debug=True)
