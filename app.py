@@ -3,25 +3,33 @@ import requests
 from flask import Flask, render_template
 from flask_restful import Resource, Api, reqparse
 
-TOKEN = 'cb48489b-567a-4458-8525-517390fb1220'
-
-app = Flask(__name__)
+# Create the application instance
+app = Flask(__name__, template_folder="templates")
 api = Api(app)
 parser = reqparse.RequestParser()
 parser.add_argument('distance')
-parser.add_argument('monnaie')
+parser.add_argument('devise')
 
-PRIXKILOMETRE = 0.25
+prixkm = 0.25
 
+# Create a URL route in our application for "/"
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('home.html')
 
 class CalculerPrix(Resource):
     def get(self):
         #TODO devise
         args = parser.parse_args()
-        prix = float(args['distance']) * PRIXKILOMETRE
-        return {'prix': prix}
-
-api.add_resource(CalculerPrix, '/calculerPrix')
+        if args['devise'] == 'Euro':
+            prix = float(args['distance']) * prixkm
+            return {'prix': prix,
+                    'devise': '€'}
+        elif args['devise'] == 'Dollar':
+            prix = float(args['distance']) * prixkm * 1.09
+            return {'prix': prix,
+                    'devise': '$'}
+        elif args['devise'] == 'Yen':
+            prix = float(args['distance']) * prixkm * 116.702
+            return {'prix': prix,
+                    'devise': '¥'}
