@@ -1,22 +1,27 @@
-from flask import (
-    Flask,
-    render_template
-)
+from zeep import Client
+import requests
+from flask import Flask, render_template
+from flask_restful import Resource, Api, reqparse
 
-# Create the application instance
-app = Flask(__name__, template_folder="templates")
+TOKEN = 'cb48489b-567a-4458-8525-517390fb1220'
 
-# Create a URL route in our application for "/"
+app = Flask(__name__)
+api = Api(app)
+parser = reqparse.RequestParser()
+parser.add_argument('distance')
+parser.add_argument('monnaie')
+
+PRIXKILOMETRE = 0.25
+
 @app.route('/')
-def home():
-    """
-    This function just responds to the browser ULR
-    localhost:5000/
+def index():
+    return render_template('index.html')
 
-    :return:        the rendered template 'home.html'
-    """
-    return render_template('home.html')
+class CalculerPrix(Resource):
+    def get(self):
+        #TODO devise
+        args = parser.parse_args()
+        prix = float(args['distance']) * PRIXKILOMETRE
+        return {'prix': prix}
 
-# If we're running in stand alone mode, run the application
-if __name__ == '__main__':
-    app.run(debug=True)
+api.add_resource(CalculerPrix, '/calculerPrix')
