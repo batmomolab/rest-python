@@ -17,6 +17,7 @@ def home():
     return render_template('home.html')
 
 
+# Calcul du prix en fonction de la distance et de l'unité passé dans l'URL
 class CalculPrix(Resource):
     def get(self):
         # TODO devise
